@@ -687,7 +687,7 @@ const Sidebar = () => {
           }}>
             <Box 
               component="img" 
-              src="/cover.jpg" 
+              src="/cover.png" 
               alt="Journal Cover" 
               sx={{ 
                 maxWidth: '100%', 

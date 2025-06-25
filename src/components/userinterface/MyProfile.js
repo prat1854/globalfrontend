@@ -103,7 +103,7 @@ export default function MyProfile() {
               : [],
             joinedDate: response.data.createdAt || ''
           };
-          console.log('Transformed profile data:', transformedData);
+         // console.log('Transformed profile data:', transformedData);
           setProfileData(transformedData);
         } else {
           setError('No profile data returned from server');

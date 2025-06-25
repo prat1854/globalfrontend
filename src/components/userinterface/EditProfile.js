@@ -66,7 +66,7 @@ export default function EditProfile() {
       } catch (err) {
         // If retryCount is less than 2, try again
         if (retryCount < 2) {
-          console.log(`Retrying... Attempt ${retryCount + 1}`);
+         // console.log(`Retrying... Attempt ${retryCount + 1}`);
           attemptFetchProfile(retryCount + 1); // Retry the request
         } else {
           // After 3 failed attempts (0, 1, 2 retries)
@@ -222,7 +222,7 @@ export default function EditProfile() {
         }
       }
     } catch (err) {
-      console.error('Error updating profile:', err);
+     // console.error('Error updating profile:', err);
   
       // Retry logic if there is an error
       if (retryCount < 2) {

@@ -12,6 +12,8 @@ import BusinessIcon from '@mui/icons-material/Business';
 import PublicIcon from '@mui/icons-material/Public';
 import LockIcon from '@mui/icons-material/Lock';
 import { useNavigate } from 'react-router-dom';
+import PhoneIcon from '@mui/icons-material/Phone';
+
 
 
 
@@ -91,6 +93,7 @@ export default function SignUpPage() {
     confirmPassword: '',
     affiliation: '',
     country: '',
+    phonenumber:'',
     orcidId: '',
     areasOfInterest: '',
     agreeToPrivacy: false,
@@ -129,6 +132,14 @@ export default function SignUpPage() {
       tempErrors.country = 'Required';
       isValid = false;
     }
+    if (!formData.phonenumber) {
+      tempErrors.phonenumber = 'Required';
+      isValid = false;
+    } else if (!/^\d{10}$/.test(formData.phonenumber)) {
+      tempErrors.phonenumber = 'Phone number must be exactly 10 digits';
+      isValid = false;
+    }
+    
     if (!formData.email) {
       tempErrors.email = 'Required';
       isValid = false;
@@ -177,6 +188,7 @@ export default function SignUpPage() {
         name: `${formData.givenName} ${formData.familyName}`.trim(),
         affiliation: formData.affiliation,
         country: formData.country,
+        phonenumber:formData.phonenumber,
         orcidId: formData.orcidId || undefined, // Send undefined if empty
         areasOfInterest: formData.areasOfInterest || undefined, // Send undefined if empty
         agreeToPrivacy: formData.agreeToPrivacy
@@ -494,6 +506,27 @@ export default function SignUpPage() {
                   </TextField>
                 </Grid>
                 <Grid item xs={12}>
+  <TextField
+    required
+    fullWidth
+    label="Phone Number *"
+    name="phonenumber"
+    value={formData.phonenumber}
+    onChange={handleChange}
+    error={!!errors.phonenumber}
+    helperText={errors.phonenumber}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <PhoneIcon color="primary" />
+        </InputAdornment>
+      ),
+    }}
+    inputProps={{ maxLength: 10, inputMode: 'numeric', pattern: '[0-9]*' }}
+  />
+</Grid>
+
+              <Grid item xs={12}>
                   <TextField
                     fullWidth
                     label="ORCID ID (Optional)"

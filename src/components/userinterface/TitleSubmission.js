@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Container, Box, Paper, Typography, TextField, Button, Checkbox,
   FormControlLabel, FormGroup, FormHelperText, Grid, Divider,
-  Alert, CircularProgress, IconButton, Menu, MenuItem
+  Alert, CircularProgress, IconButton, Menu, MenuItem, List, ListItem
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate, Link } from 'react-router-dom';
@@ -12,6 +12,7 @@ import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import TextFormatIcon from '@mui/icons-material/TextFormat';
+
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -37,13 +38,6 @@ const AuthCTA = styled(Box)(({ theme }) => ({
 
 export default function TitleSubmission() {
   const [title, setTitle] = useState('');
-  const [checklist, setChecklist] = useState({
-    guidelines: false,
-    notPublished: false,
-    references: false,
-    tables: false,
-    permissions: false
-  });
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -54,13 +48,6 @@ export default function TitleSubmission() {
   // Check if user is logged in without redirection
   const authenticated = isLoggedIn();
 
-  const handleChecklistChange = (event) => {
-    setChecklist({
-      ...checklist,
-      [event.target.name]: event.target.checked
-    });
-  };
-  
   const handleFormatClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -73,12 +60,6 @@ export default function TitleSubmission() {
     const newErrors = {};
     if (!title.trim()) {
       newErrors.title = 'Title is required';
-    }
-    
-    // Check if all checklist items are checked
-    const allChecklistChecked = Object.values(checklist).every(value => value === true);
-    if (!allChecklistChecked) {
-      newErrors.checklist = 'All submission requirements must be met';
     }
     
     if (!privacyConsent) {
@@ -274,67 +255,28 @@ export default function TitleSubmission() {
           </Box>
           
           <Box mb={4}>
-            <Typography variant="h6" gutterBottom>Submission Checklist *</Typography>
+            <Typography variant="h6" gutterBottom>Submission Requirements</Typography>
             <Typography paragraph>
-              All submissions must meet the following requirements.
+              All submissions must meet the following requirements:
             </Typography>
             
-            <FormGroup>
-              <FormControlLabel
-                control={
-                    <Checkbox  
-                    checked={checklist.guidelines}
-                    onChange={handleChecklistChange}
-                    name="guidelines"
-                  />
-                }
-                label="This submission meets the requirements outlined in the Author Guidelines."
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox 
-                    checked={checklist.notPublished}
-                    onChange={handleChecklistChange}
-                    name="notPublished"
-                  />
-                }
-                label="This submission has not been previously published, nor is it before another journal for consideration."
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox 
-                    checked={checklist.references}
-                    onChange={handleChecklistChange}
-                    name="references"
-                  />
-                }
-                label="All references have been checked for accuracy and completeness."
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox 
-                    checked={checklist.tables}
-                    onChange={handleChecklistChange}
-                    name="tables"
-                  />
-                }
-                label="All tables and figures have been numbered and labeled."
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox 
-                    checked={checklist.permissions}
-                    onChange={handleChecklistChange}
-                    name="permissions"
-                  />
-                }
-                label="Permission has been obtained to publish all photos, datasets and other material provided with this submission."
-              />
-            </FormGroup>
-            
-            {errors.checklist && (
-              <FormHelperText error>{errors.checklist}</FormHelperText>
-            )}
+            <List>
+              <ListItem>
+                <Typography>• This submission meets the requirements outlined in the Author Guidelines.</Typography>
+              </ListItem>
+              <ListItem>
+                <Typography>• This submission has not been previously published, nor is it before another journal for consideration.</Typography>
+              </ListItem>
+              <ListItem>
+                <Typography>• All references have been checked for accuracy and completeness.</Typography>
+              </ListItem>
+              <ListItem>
+                <Typography>• All tables and figures have been numbered and labeled.</Typography>
+              </ListItem>
+              <ListItem>
+                <Typography>• Permission has been obtained to publish all photos, datasets and other material provided with this submission.</Typography>
+              </ListItem>
+            </List>
           </Box>
           
           <Box mb={4}>
